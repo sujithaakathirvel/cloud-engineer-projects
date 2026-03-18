@@ -27,6 +27,23 @@ This Architecture follows several AWS security best practices:
 
 These measures significantly reduce the infrastructure attack surface.
 
+**Skills Demonstrated**
+
+- Designed and implemented a secure AWS VPC architecture  
+- Created public and private subnets with proper routing  
+- Configured NAT Gateway for outbound internet access  
+- Applied security best practices (no public IP, no SSH)  
+- Used IAM roles to grant secure access to AWS services  
+- Accessed EC2 instances using Systems Manager (SSM)  
+- Deployed and verified a web server on a Linux instance
+
+**Future Improvements**
+
+- Automate infrastructure using Terraform  
+- Add an Application Load Balancer (ALB) for traffic distribution  
+- Implement Auto Scaling for high availability  
+- Add monitoring and logging using AWS CloudWatch 
+
 
 
 
