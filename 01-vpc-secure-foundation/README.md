@@ -6,7 +6,15 @@ An EC2 instance is deployed in a private subnet without a public IP address, fol
 
 Outbound internet access for updates is enabled through a NAT Gateway while the instance remains isolated from direct internet exposure.
 
+
 **Architecture**
+
+
+![secure-vpc](https://github.com/user-attachments/assets/ed391257-0cf4-4fbf-a56f-a6aaaa47ac6c)
+
+
+
+
 
 **Operational Flow**
 
