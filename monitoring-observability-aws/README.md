@@ -26,19 +26,19 @@ EC2 → CloudWatch → Alarm → SNS → Email
 ## Screenshots
 
 ### Metrics
-![metrics](screenshots/01-metrics.png)
+![metrics](screenshots/metrics.png)
 
 ### Alarm Triggered
-![alarm](screenshots/02-alarm-triggered.png)
+![alarm](screenshots/alarm-triggered.png)
 
 ### Email Alert
-![email](screenshots/03-email-alert.png)
+![email](screenshots/email-alert.png)
 
 ### Dashboard
-![dashboard](screenshots/04-dashboard.png)
+![dashboard](screenshots/dashboard.png)
 
 ### Python Log Analysis
-![python](screenshots/05-python-output.png)
+![python](screenshots/python-output.png)
 
 ## Log Analysis (Python)
 
