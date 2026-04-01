@@ -1,63 +1,54 @@
+# Secure VPC Architecture (AWS)
+
 ## Overview
 
-Designed and deployed a secure AWS VPC architecture with private EC2 access using Systems Manager and controlled outbound connectivity via NAT Gateway.
+Designed and deployed a secure AWS VPC architecture with an EC2 instance in a private subnet, following cloud security best practices.
 
-This Project demonstrates how to design and deploy a secure AWS networking architecture using Amazon VPC. 
+Administrative access is provided using AWS Systems Manager (SSM) Session Manager, eliminating the need for SSH access. Outbound internet connectivity is enabled via a NAT Gateway while keeping the instance isolated from direct internet exposure.
 
-An EC2 instance is deployed in a private subnet without a public IP address, following cloud security best practices. Administrative access is provided using AWS Systems Manager Session Manager instead of exposing SSH to the internet.
-
-Outbound internet access for updates is enabled through a NAT Gateway while the instance remains isolated from direct internet exposure.
-
+---
 
 ## Architecture
 
-
 ![secure-vpc](https://github.com/user-attachments/assets/ed391257-0cf4-4fbf-a56f-a6aaaa47ac6c)
 
-
-
-
+---
 
 ## Operational Flow
 
-Administrative access to the EC2 instance is provided through AWS Systems Manager Session Manager using an attached IAM role.
+- EC2 instance is deployed in a private subnet with no public IP  
+- Administrative access is handled via SSM using an attached IAM role  
+- Outbound traffic is routed through the NAT Gateway → Internet Gateway  
+- Enables updates and package installation without exposing the instance to inbound internet traffic  
 
-Outbound internet traffic from the private instance is routed through the NAT Gateway and Internet Gateway, allowing package installation and updates while preventing inbound internet access.
+---
 
 ## Security Considerations
 
-This Architecture follows several AWS security best practices: 
+- EC2 instance deployed in a **private subnet**  
+- **No public IP address** assigned  
+- **SSH access disabled** (port 22 not exposed)  
+- Access managed via **AWS Systems Manager (SSM)**  
+- **No inbound traffic allowed** in security groups  
+- Controlled outbound access through **NAT Gateway**  
 
-- EC2 instance deployed in a **private subnet**
-- **No public IP address** assigned to the instance
-- **SSH access disabled** (port 22 not exposed)
-- Secure administrative access using **AWS Systems Manager Session Manager**
-- **Minimal security group rules** with no inbound traffic allowed
-- Controlled outbound internet access through the **NAT Gateway**
+These controls reduce the attack surface and follow least-privilege principles.
 
-These measures significantly reduce the infrastructure attack surface.
+---
 
 ## Skills Demonstrated
 
-- Designed and implemented a secure AWS VPC architecture  
-- Created public and private subnets with proper routing  
-- Configured NAT Gateway for outbound internet access  
-- Applied security best practices (no public IP, no SSH)  
-- Used IAM roles to grant secure access to AWS services  
-- Accessed EC2 instances using Systems Manager (SSM)  
-- Deployed and verified a web server on a Linux instance
+- Designed secure VPC architecture (public + private subnets)  
+- Configured routing using Internet Gateway and NAT Gateway  
+- Implemented secure access using IAM roles and SSM  
+- Applied infrastructure security best practices  
+- Deployed and validated a Linux-based EC2 instance  
+
+---
 
 ## Future Improvements
 
-- Automate infrastructure using Terraform  
-- Add an Application Load Balancer (ALB) for traffic distribution  
-- Implement Auto Scaling for high availability  
-- Add monitoring and logging using AWS CloudWatch 
-
-
-
-
-
-
-
-
+- Infrastructure automation using Terraform  
+- Add Application Load Balancer (ALB)  
+- Implement Auto Scaling  
+- Add monitoring and logging with CloudWatch  

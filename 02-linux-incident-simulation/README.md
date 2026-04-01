@@ -1,39 +1,70 @@
-## Goal
-Simulated real-world Linux incidents and performed step-by-step troubleshooting using standard DevOps practices.
+# Linux Incident Simulation (EC2)
+
+## Overview
+
+Simulated real-world Linux system failures and applied a structured troubleshooting workflow to identify and resolve issues.
+
+Focus was on building a repeatable debugging approach similar to production environments.
+
+---
 
 ## Environment
-Linux (WSL / Ubuntu)
 
-## Scenarios
-- nginx stopped  
-- nginx process killed  
+- OS: Linux (WSL / Ubuntu)  
+- Platform: Amazon EC2  
+
+---
+
+## Failure Scenarios
+
+- nginx service stopped  
+- nginx process manually terminated  
 - high CPU usage simulation  
-- disk usage simulation  
+- disk usage spike  
+
+---
 
 ## Tools Used
-- systemctl  
-- journalctl  
-- htop  
-- ss -tulnp  
-- curl  
-- df -h  
-- du -sh  
 
-## Troubleshooting Flow
-1. Check app (curl)  
-2. Check service (systemctl)  
-3. Check logs (journalctl)  
-4. Check CPU (htop)  
-5. Check ports (ss)  
-6. Check disk (df)  
+- `systemctl` — service management  
+- `journalctl` — log analysis  
+- `htop` — CPU and memory monitoring  
+- `ss -tulnp` — port inspection  
+- `curl` — service validation  
+- `df -h` — disk usage  
+- `du -sh` — directory size analysis  
+
+---
+
+## Troubleshooting Workflow
+
+1. Validate service availability (`curl`)  
+2. Check service status (`systemctl`)  
+3. Analyze logs (`journalctl`)  
+4. Monitor system resources (`htop`)  
+5. Inspect network ports (`ss`)  
+6. Check disk usage (`df`, `du`)  
+
+---
 
 ## Key Learnings
-- service vs process  
-- debugging using logs  
-- CPU and disk monitoring  
-- real-world troubleshooting mindset  
+
+- Difference between services and processes  
+- Importance of log-based debugging  
+- Identifying performance bottlenecks (CPU, disk)  
+- Structured approach to incident resolution  
+
+---
+
+## Outcome
+
+Developed a repeatable troubleshooting workflow for diagnosing and resolving system-level issues in a Linux environment.
+
+---
 
 ## What This Project Demonstrates
-- Linux troubleshooting skills  
-- Debugging mindset  
-- Incident handling approach  
+
+- Linux system troubleshooting  
+- Debugging and root cause analysis  
+- Incident handling workflow  
+- Production-style problem-solving approach  

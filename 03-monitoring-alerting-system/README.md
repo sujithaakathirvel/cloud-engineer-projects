@@ -1,8 +1,12 @@
-# Monitoring & Observability with CloudWatch and SNS
+# Monitoring & Observability (CloudWatch + SNS)
 
 ## Overview
 
-Designed and implemented a monitoring and alerting system on AWS to track system performance and receive notifications when issues occur.
+Implemented a monitoring and alerting system on AWS to track system performance and detect failures in real time.
+
+The system collects metrics from EC2, triggers alarms based on thresholds, and sends notifications via SNS.
+
+---
 
 ## Services Used
 
@@ -10,18 +14,42 @@ Designed and implemented a monitoring and alerting system on AWS to track system
 - Amazon CloudWatch  
 - Amazon SNS  
 
-## What Was Implemented
+---
+
+## Implementation
 
 - Installed and configured CloudWatch Agent on EC2  
 - Collected system metrics (CPU, memory, disk)  
 - Created CloudWatch alarm for CPU utilization  
 - Configured SNS for email notifications  
 - Built a CloudWatch dashboard for visualization  
-- Simulated high CPU usage to trigger alerts  
+- Simulated high CPU usage to validate alerting  
+
+---
 
 ## Alert Flow
 
 EC2 → CloudWatch → Alarm → SNS → Email
+
+---
+
+## Observability
+
+- Metrics visualized through CloudWatch dashboards  
+- Alerts triggered based on threshold breaches  
+- Logs analyzed to identify system-level issues  
+
+---
+
+## Log Analysis (Python)
+
+A Python script was developed to analyze system logs:
+
+- Reads `/var/log/syslog`  
+- Counts error occurrences  
+- Outputs a summary report  
+
+---
 
 ## Screenshots
 
@@ -37,26 +65,28 @@ EC2 → CloudWatch → Alarm → SNS → Email
 ### Dashboard
 ![dashboard](screenshots/dashboard.png)
 
-### Python Log Analysis
+### Log Analysis Output
 ![python](screenshots/python-output.png)
 
-## Log Analysis (Python)
-
-A simple Python script was created to analyze system logs:
-
-- Reads `/var/log/syslog`  
-- Counts error occurrences  
-- Outputs summary  
+---
 
 ## Key Learnings
 
-- Monitoring vs Observability  
-- CloudWatch metrics and alarms  
-- SNS-based alerting  
-- Importance of proactive monitoring  
+- Difference between monitoring and observability  
+- Designing alerting systems using CloudWatch and SNS  
+- Importance of real-time system visibility  
+- Using logs to support incident analysis  
+
+---
+
+## Outcome
+
+Built a monitoring and alerting pipeline capable of detecting system issues and notifying users in real time.
+
+---
 
 ## Future Improvements
 
-- Add memory and disk alarms  
+- Add memory and disk-based alarms  
 - Integrate logs into CloudWatch Logs  
-- Automate setup using Terraform  
+- Automate infrastructure using Terraform  

@@ -1,13 +1,14 @@
-# AWS ECS Fargate Deployment (Terraform)
+# ECS Fargate Deployment (Terraform)
 
 ## Overview
 
-This project demonstrates deploying a containerized Python (Flask) application on AWS using Terraform. It follows a production-style architecture with ECS Fargate, Application Load Balancer, private networking, and CloudWatch logging.
+Deployed a containerized Python (Flask) application on AWS using ECS Fargate and Terraform.
+
+The architecture follows a production-style setup with an Application Load Balancer, private networking, centralized logging, and built-in self-healing.
 
 ---
 
 ## Architecture
-
 
 ![Architecture](screenshots/architecture.png)
 
@@ -15,79 +16,85 @@ This project demonstrates deploying a containerized Python (Flask) application o
 
 ## Tech Stack
 
-* AWS ECS Fargate
-* Application Load Balancer (ALB)
-* Amazon ECR
-* CloudWatch Logs
-* Terraform
-* Docker
-* Python (Flask)
+- Amazon ECS (Fargate)  
+- Application Load Balancer (ALB)  
+- Amazon ECR  
+- Amazon CloudWatch Logs  
+- Terraform  
+- Docker  
+- Python (Flask)  
+
+---
+
+## Architecture Design
+
+- Public ALB for external traffic  
+- ECS tasks running in private subnets  
+- Container images stored in ECR  
+- Centralized logging via CloudWatch  
+- Health checks configured using `/health` endpoint  
 
 ---
 
 ## Project Structure
 
 ```
-app/
-terraform/
-screenshots/
+05-ecs-fargate-deployment/
+│
+├── app/
+├── terraform/
+└── screenshots/
 ```
 
 ---
 
-## Features
+## Implementation
 
-* Containerized application using Docker
-* Infrastructure provisioned with Terraform
-* Public ALB + private ECS setup
-* Health checks (`/health`)
-* CloudWatch logging
-* Self-healing (task restart)
+- Built and containerized a Flask application  
+- Pushed Docker image to ECR  
+- Provisioned infrastructure using Terraform  
+- Configured ALB, target group, and listener  
+- Deployed ECS service in private subnets  
+- Enabled CloudWatch logging for containers  
+- Configured health checks and service scaling behavior  
 
 ---
 
 ## Self-Healing
 
-A running ECS task was manually stopped to simulate failure. ECS automatically launched a new task to maintain availability.
+Simulated a failure by manually stopping a running ECS task.
+
+ECS automatically launched a replacement task, demonstrating service resilience and high availability.
 
 ---
 
 ## Screenshots
 
-
-### 🔹 ECS Service Running
-
-
+### ECS Service Running
 ![ECS Service](screenshots/ecs-service-overview.png)
 
-### 🔹 Target Group Health
-
-
+### Target Group Health
 ![ALB Target Group](screenshots/alb-target-group-healthy.png)
 
-### 🔹 CloudWatch Logs
-
-
+### CloudWatch Logs
 ![CloudWatch Logs](screenshots/cloudwatch-app-logs.png)
 
-### 🔹 Self-Healing (Task Restart)
-
-
+### Self-Healing (Task Restart)
 ![Self Healing](screenshots/ecs-self-healing.png)
 
 ---
 
 ## Key Learnings
 
-* Container lifecycle (build → push → deploy)
-* ECS Fargate architecture
-* Load balancing with ALB
-* Logging with CloudWatch
-* Infrastructure as Code using Terraform
-* Designing resilient systems
+- Container lifecycle (build → push → deploy)  
+- ECS Fargate architecture and task orchestration  
+- Load balancing with ALB  
+- Observability using CloudWatch Logs  
+- Infrastructure as Code using Terraform  
+- Designing resilient and fault-tolerant systems  
 
 ---
 
-## Conclusion
+## Outcome
 
-This project showcases a real-world cloud deployment using AWS and Terraform, focusing on scalability, security, and reliability.
+Built a production-style container deployment with secure networking, load balancing, logging, and automatic recovery from failures.
