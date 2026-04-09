@@ -1,4 +1,4 @@
-# Production Monitoring & Observability Pipeline on AWS
+# Monitoring & Observability Pipeline on AWS
 
 ## Overview
 
