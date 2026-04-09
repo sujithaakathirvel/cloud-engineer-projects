@@ -1,4 +1,4 @@
-# Production Incident Simulation & Troubleshooting on EC2
+# Incident Simulation & Troubleshooting on EC2
 
 ## Overview
 
