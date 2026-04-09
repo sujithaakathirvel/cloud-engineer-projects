@@ -1,8 +1,8 @@
-# Production Terraform Remote State Management (S3 + DynamoDB)
+#  Terraform Remote State Management (S3 + DynamoDB)
 
 ## Overview
 
-Designed and implemented a **production-grade Terraform remote state management system** using Amazon S3 for state storage and DynamoDB for state locking.
+Designed and implemented a **Terraform remote state management system** using Amazon S3 for state storage and DynamoDB for state locking.
 
 This setup enables **safe, collaborative infrastructure provisioning**, preventing state conflicts and ensuring consistency across deployments.
 
