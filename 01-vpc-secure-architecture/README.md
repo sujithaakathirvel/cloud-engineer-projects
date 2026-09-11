@@ -6,7 +6,7 @@ Designed and implemented a **secure, production-style VPC architecture** on AWS,
 
 ## 🏗️ Architecture
 
-![Secure VPC Architecture](screenshots/secure-vpc.jpg)
+![Secure VPC Architecture](architecture/architecture-diagram.jpg)
 
 ### Architecture Flow
 
