@@ -2,127 +2,130 @@
 
 ## Overview
 
-Designed and implemented a **production-style monitoring and alerting system on AWS** to track system performance, detect anomalies, and respond to failures in real time.
+Designed and implemented a **monitoring and alerting pipeline on AWS** to track system performance, detect abnormal behaviour, and support proactive incident response.
 
-The system collects metrics from EC2, evaluates thresholds using CloudWatch alarms, and sends notifications via SNS, enabling proactive incident detection.
-
-**The system is designed to enable proactive monitoring rather than reactive debugging.**
+The system collects EC2 metrics using CloudWatch, evaluates thresholds through CloudWatch Alarms, and sends notifications via SNS.
 
 ---
 
 ## Services Used
 
-- Amazon EC2  
-- Amazon CloudWatch  
-- Amazon SNS  
+- Amazon EC2
+- Amazon CloudWatch
+- Amazon SNS
 
 ---
 
 ## Architecture Flow
 
-EC2 → CloudWatch Metrics → Alarm → SNS → Email Notification
+EC2 → CloudWatch Metrics → CloudWatch Alarm → SNS → Email Notification
 
 ---
 
 ## Architecture Decisions
 
-- Amazon CloudWatch was chosen for native integration with AWS services and real-time metric collection  
-- Amazon SNS was used for alerting to enable immediate, event-driven notifications  
-- EC2-based monitoring simulates real-world infrastructure environments  
-- Python log analysis complements metrics with deeper system-level insights  
+- **Amazon CloudWatch** for native AWS monitoring and metric collection
+- **Amazon SNS** for event-driven email notifications
+- **CloudWatch Agent** for additional system-level metrics
+- **Python log analysis** to complement metrics with application/system-level insights
 
 ---
 
 ## Implementation
 
-- Installed and configured CloudWatch Agent on EC2  
-- Collected system-level metrics (CPU, memory, disk)  
-- Created CloudWatch alarms based on CPU utilization thresholds  
-- Configured SNS for real-time email notifications  
-- Built CloudWatch dashboards for metric visualization  
-- Simulated high CPU usage to validate alerting pipeline  
+- Installed and configured the CloudWatch Agent on EC2
+- Collected CPU, memory, and disk metrics
+- Created CloudWatch Alarms using CPU utilisation thresholds
+- Configured SNS for email notifications
+- Built CloudWatch dashboards for metric visualisation
+- Simulated high CPU usage to validate the alerting workflow
 
 ---
 
 ## Observability Design
 
-- Metrics collected via CloudWatch Agent for system-level visibility  
-- Dashboards provide real-time monitoring of CPU, memory, and disk usage  
-- Alarms configured for proactive detection of anomalies  
-- Logs used to support root cause analysis and debugging  
-- Combines metrics and logs for a complete observability strategy  
+- Metrics collected through the CloudWatch Agent
+- Dashboards provide visibility into CPU, memory, and disk usage
+- Alarms detect threshold breaches automatically
+- Logs support troubleshooting and root cause analysis
+- Combined metrics and logs to improve system visibility
 
 ---
 
 ## Incident Response Workflow
 
-- CloudWatch detects threshold breach (e.g., high CPU)  
-- Alarm transitions to ALARM state  
-- SNS sends notification to engineer  
-- Engineer investigates using metrics, logs, and system tools  
+1. CloudWatch detects a threshold breach
+2. Alarm transitions to the `ALARM` state
+3. SNS sends an email notification
+4. Engineer investigates using metrics, logs, and system tools
 
 ---
 
-## Log Analysis (Python)
+## Log Analysis with Python
 
-Developed a Python-based log analysis tool to support observability:
+Developed a Python-based log analysis tool to support troubleshooting.
 
-- Reads `/var/log/syslog`  
-- Identifies and counts error occurrences  
-- Outputs a summarized report for quick analysis  
+- Reads `/var/log/syslog`
+- Identifies and counts error occurrences
+- Produces a summarised output for quick analysis
 
 ---
 
 ## Security Considerations
 
-- CloudWatch Agent configured using IAM roles (no hardcoded credentials)  
-- SNS topics restricted to authorized subscribers  
+- CloudWatch Agent configured using IAM roles rather than hardcoded credentials
+- SNS notifications restricted to authorised subscribers
 
 ---
 
 ## Key Outcomes
 
-- Built a real-time monitoring and alerting pipeline  
-- Enabled proactive detection of system anomalies  
-- Reduced mean time to detection (MTTD) using automated alerts  
-- Improved system visibility through dashboards and log analysis  
+- Built a monitoring and alerting pipeline on AWS
+- Enabled automated detection of system anomalies
+- Improved visibility through CloudWatch dashboards
+- Combined infrastructure metrics with Python-based log analysis
+- Practised a proactive incident detection and response workflow
 
 ---
 
 ## Screenshots
 
 ### Metrics
-![metrics](screenshots/metrics.png)
+
+![CloudWatch Metrics](screenshots/metrics.png)
 
 ### Alarm Triggered
-![alarm](screenshots/alarm-triggered.png)
+
+![CloudWatch Alarm](screenshots/alarm-triggered.png)
 
 ### Email Alert
-![email](screenshots/email-alert.png)
 
-### Dashboard
-![dashboard](screenshots/dashboard.png)
+![SNS Email Alert](screenshots/email-alert.png)
 
-### Log Analysis Output
-![python](screenshots/python-output.png)
+### CloudWatch Dashboard
+
+![CloudWatch Dashboard](screenshots/dashboard.png)
+
+### Python Log Analysis
+
+![Python Log Analysis](screenshots/python-output.png)
 
 ---
 
 ## Skills Demonstrated
 
-- Monitoring and observability design on AWS  
-- CloudWatch metrics, alarms, and dashboards  
-- SNS-based alerting systems  
-- Log analysis and debugging using Python  
-- Proactive incident detection and response  
+- AWS monitoring and observability
+- CloudWatch metrics, alarms, and dashboards
+- SNS-based alerting
+- Linux system monitoring
+- Log analysis with Python
+- Incident detection and troubleshooting
 
 ---
 
 ## Future Improvements
 
-- Add memory and disk-based alarms  
-- Integrate logs into CloudWatch Logs  
-- Automate infrastructure using Terraform  
-- Implement anomaly detection for advanced alerting  
-
----
+- Add memory and disk-based CloudWatch alarms
+- Integrate application logs with CloudWatch Logs
+- Automate infrastructure using Terraform
+- Implement CloudWatch anomaly detection
