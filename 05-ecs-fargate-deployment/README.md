@@ -1,177 +1,174 @@
-#  Containerized Application on AWS (ECS Fargate + Terraform)
+# Containerized Application on AWS (ECS Fargate + Terraform)
 
 ## Overview
 
-Designed, deployed, and operated a **containerized application on AWS** using ECS Fargate and Terraform.
+Designed, deployed, and operated a containerized application on AWS using **ECS Fargate and Terraform**.
 
-The system follows modern cloud architecture principles with **load balancing, private networking, centralized logging, and built-in self-healing**, ensuring scalability, high availability, and reliability.
-
-Designed as a stateless, horizontally scalable architecture.  
-Designed to reflect real-world production systems used in modern cloud-native applications.
+The architecture uses an **Application Load Balancer, private subnets, Amazon ECR, and CloudWatch Logs** to provide secure networking, load balancing, centralized logging, and automatic task recovery.
 
 ---
 
 ## Architecture
 
-
-![Architecture](screenshots/architecture.png)
+![Architecture](./screenshots/architecture.png)
 
 ---
 
 ## Architecture Flow
 
-User → ALB (Public Subnet)  
-      → ECS Fargate Tasks (Private Subnet)  
-      → Container (Flask App)  
-      → CloudWatch Logs  
+```text
+User
+  ↓
+Application Load Balancer (Public Subnet)
+  ↓
+ECS Fargate Tasks (Private Subnet)
+  ↓
+Flask Application
+  ↓
+CloudWatch Logs
+```
 
 ---
 
 ## Tech Stack
 
-- Amazon ECS (Fargate)  
-- Application Load Balancer (ALB)  
-- Amazon ECR  
-- Amazon CloudWatch Logs  
-- Terraform  
-- Docker  
-- Python (Flask)  
+- Amazon ECS Fargate
+- Application Load Balancer (ALB)
+- Amazon ECR
+- Amazon CloudWatch Logs
+- Terraform
+- Docker
+- Python (Flask)
 
 ---
 
 ## Architecture Decisions
 
-- **Fargate over EC2**  
-  Eliminates server management and enables serverless container orchestration  
-
-- **Private Subnets for ECS Tasks**  
-  Enhances security by preventing direct internet exposure  
-
-- **Application Load Balancer**  
-  Distributes incoming traffic and performs health checks  
-
-- **CloudWatch Logs**  
-  Provides centralized logging for debugging and observability  
-
-- **ECR for Image Storage**  
-  Secure and scalable container image registry  
+- **Fargate over EC2** — removes the need to manage underlying servers.
+- **Private subnets for ECS tasks** — prevents direct public access to containers.
+- **Application Load Balancer** — distributes traffic and performs health checks.
+- **CloudWatch Logs** — provides centralized container logging.
+- **Amazon ECR** — stores and manages container images.
 
 ---
 
 ## Implementation
 
-- Built and containerized a Python Flask application  
-- Pushed Docker image to Amazon ECR  
-- Provisioned infrastructure using Terraform  
-- Configured ALB, target group, and listener  
-- Deployed ECS service in private subnets  
-- Enabled CloudWatch logging for containers  
-- Configured health checks using `/health` endpoint  
+- Built and containerized a Python Flask application.
+- Built and pushed the Docker image to Amazon ECR.
+- Provisioned AWS infrastructure using Terraform.
+- Configured an Application Load Balancer, target group, and listener.
+- Deployed ECS Fargate tasks in private subnets.
+- Configured CloudWatch logging for containers.
+- Implemented a `/health` endpoint for ALB health checks.
 
 ---
 
 ## Self-Healing & Resilience
 
-- Simulated failure by manually stopping a running ECS task  
-- ECS service automatically launched a replacement task  
-- ALB health checks ensured traffic was routed only to healthy containers  
+A running ECS task was manually stopped to simulate a container failure.
 
-This demonstrates **automatic recovery, high availability, and fault tolerance in a production environment**.
+The ECS service automatically launched a replacement task, while the ALB health check ensured traffic was directed only to healthy tasks.
+
+This demonstrates **automatic recovery and service availability**.
 
 ---
 
 ## Security Considerations
 
-- Only ALB exposes public HTTP traffic  
-- ECS tasks run in private subnets with no direct internet access  
-- Security groups restrict traffic flow between ALB and ECS  
-- IAM roles used for ECS task execution (no hardcoded credentials)  
+- Only the ALB exposes public HTTP traffic.
+- ECS tasks run in private subnets.
+- Security groups restrict traffic between the ALB and ECS tasks.
+- IAM roles are used for ECS task execution.
+- No credentials are hardcoded in the application.
 
 ---
 
 ## CI/CD Consideration
 
-This architecture is designed to integrate with CI/CD pipelines:
+The architecture can be extended with a CI/CD pipeline to:
 
-- Docker images can be automatically built and pushed to ECR  
-- ECS services can be updated via automated deployments  
-- Enables zero-downtime deployments using rolling updates  
-
----
-
-## Observability Consideration
-
-- CloudWatch Logs used for debugging and monitoring container behavior  
-- Metrics can be extended with CloudWatch alarms for proactive alerting  
+- Build Docker images automatically.
+- Push images to Amazon ECR.
+- Deploy updated images to ECS.
+- Support rolling deployments with minimal downtime.
 
 ---
 
-## Key Engineering Insight
+## Observability
 
-- Container orchestration platforms like ECS ensure **service availability through automated recovery**  
-- Health checks and load balancing are critical for maintaining uptime  
-- Serverless containers (Fargate) reduce operational overhead while maintaining scalability  
+- CloudWatch Logs provide centralized application logs.
+- ECS and ALB metrics can be used for monitoring.
+- CloudWatch Alarms and SNS can be added for proactive alerting.
 
 ---
 
 ## Trade-offs & Considerations
 
-- Fargate simplifies operations but has higher cost compared to EC2  
-- ALB adds slight latency but enables better traffic distribution and health checks  
-- Stateless design improves scalability but requires external state management (e.g., databases)  
+- Fargate reduces server management but can cost more than running containers on EC2.
+- ALB adds infrastructure cost but provides load balancing and health checks.
+- Stateless containers improve scalability but require external storage for persistent data.
 
 ---
 
 ## Project Structure
 
+```text
 05-ecs-fargate-deployment/
-|
-|-- app/
-|-- terraform/
-`-- screenshots/
+├── app/
+├── terraform/
+├── screenshots/
+└── README.md
+```
 
 ---
 
 ## Screenshots
 
 ### ECS Service Running
-![ECS Service](screenshots/ecs-service-overview.png)
+
+![ECS Service](./screenshots/ecs-service-overview.png)
 
 ### Target Group Health
-![ALB Target Group](screenshots/alb-target-group-healthy.png)
+
+![ALB Target Group](./screenshots/alb-target-group-healthy.png)
 
 ### CloudWatch Logs
-![CloudWatch Logs](screenshots/cloudwatch-app-logs.png)
 
-### Self-Healing (Task Restart)
-![Self Healing](screenshots/ecs-self-healing.png)
+![CloudWatch Logs](./screenshots/cloudwatch-app-logs.png)
+
+### Self-Healing Task Restart
+
+![Self Healing](./screenshots/ecs-self-healing.png)
 
 ---
 
 ## Key Outcomes
 
-- Designed, deployed, and operated a production-grade containerized application  
-- Implemented secure networking with public ALB and private compute layer  
-- Achieved high availability through ECS self-healing mechanisms  
-- Enabled centralized logging for observability  
-- Automated infrastructure provisioning using Terraform  
+- Deployed a containerized Flask application using ECS Fargate.
+- Implemented secure networking with a public ALB and private ECS tasks.
+- Demonstrated automatic task recovery.
+- Configured centralized logging with CloudWatch.
+- Automated infrastructure provisioning using Terraform.
 
 ---
 
 ## Skills Demonstrated
 
-- Containerization using Docker  
-- ECS Fargate deployment and orchestration  
-- Load balancing and health checks (ALB)  
-- Infrastructure as Code (Terraform)  
-- Observability with CloudWatch Logs  
-- Designing scalable and fault-tolerant systems  
+- Docker containerization
+- ECS Fargate deployment
+- Application Load Balancing
+- Health checks
+- Terraform Infrastructure as Code
+- Amazon ECR
+- CloudWatch Logs
+- Fault-tolerant cloud architecture
 
 ---
 
 ## Future Improvements
 
-- Implement CI/CD pipeline for automated deployments  
-- Add auto-scaling policies based on CPU/memory  
-- Integrate monitoring and alerting (CloudWatch Alarms + SNS)  
-- Add HTTPS using ACM and secure ALB configuration  
+- Implement a CI/CD pipeline for automated deployments.
+- Add ECS auto-scaling based on CPU and memory.
+- Add CloudWatch Alarms and SNS notifications.
+- Configure HTTPS using AWS Certificate Manager (ACM).
