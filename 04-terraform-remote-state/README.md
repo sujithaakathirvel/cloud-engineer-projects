@@ -1,117 +1,107 @@
-#  Terraform Remote State Management (S3 + DynamoDB)
+# Terraform Remote State Management (S3 + DynamoDB)
 
 ## Overview
 
-Designed and implemented a **Terraform remote state management system** using Amazon S3 for state storage and DynamoDB for state locking.
+Designed and implemented a **Terraform remote state management setup** using Amazon S3 for state storage and DynamoDB for state locking.
 
-This setup enables **safe, collaborative infrastructure provisioning**, preventing state conflicts and ensuring consistency across deployments.
-
-This design mirrors real-world DevOps workflows where infrastructure is managed collaboratively across teams and environments.
+The setup provides centralized state management and prevents concurrent Terraform operations from modifying infrastructure at the same time.
 
 ---
 
 ## Problem Statement
 
-Terraform local state files can lead to:
+Local Terraform state can create problems when infrastructure is managed collaboratively, including:
 
-- State conflicts when multiple engineers apply changes  
-- Risk of state corruption  
-- Lack of centralized visibility  
+- State conflicts between engineers
+- Risk of state corruption
+- Lack of centralized state management
 
-This project solves these issues by implementing a remote, locked state backend.
+This project addresses these issues using a remote backend with state locking.
 
 ---
 
 ## Architecture
 
-- Terraform CLI interacts with remote backend  
-- State file stored in S3 bucket (versioned & encrypted)  
-- DynamoDB table manages state locking  
-- Infrastructure (EC2 + Security Group) provisioned via Terraform  
+- Terraform CLI interacts with the remote backend
+- Terraform state is stored in an S3 bucket
+- S3 versioning and encryption are enabled
+- DynamoDB is used for state locking
+- Terraform provisions AWS resources including EC2 and security groups
 
 ---
 
 ## Architecture Decisions
 
 - **S3 for Remote State Storage**  
-  Provides durability, versioning, and centralized state management  
+  Provides centralized and durable state storage with versioning.
 
 - **DynamoDB for State Locking**  
-  Prevents concurrent modifications and ensures consistency  
+  Prevents concurrent Terraform operations from modifying the same state.
 
-- **Infrastructure as Code (Terraform)**  
-  Enables repeatable and version-controlled infrastructure provisioning  
+- **Terraform as Infrastructure as Code**  
+  Enables repeatable and version-controlled infrastructure provisioning.
 
 ---
 
 ## Tech Stack
 
-- Terraform  
-- Amazon S3  
-- Amazon DynamoDB  
-- Amazon EC2  
+- Terraform
+- Amazon S3
+- Amazon DynamoDB
+- Amazon EC2
 
 ---
 
 ## Implementation
 
-- Configured S3 bucket with versioning and encryption enabled  
-- Enabled remote backend configuration in Terraform  
-- Implemented state locking using DynamoDB  
-- Provisioned EC2 instance and security group  
-- Executed full lifecycle: `init → plan → apply → destroy`  
+- Configured an S3 bucket for remote Terraform state
+- Enabled S3 versioning and server-side encryption
+- Configured the Terraform remote backend
+- Implemented state locking using DynamoDB
+- Provisioned EC2 and security group resources using Terraform
+- Tested the Terraform lifecycle using `init → plan → apply → destroy`
 
 ---
 
 ## Workflow
 
-1. Bootstrap S3 bucket and DynamoDB table  
-2. Configure remote backend and migrate local state  
-3. Provision infrastructure using Terraform  
-4. Validate state locking through concurrent operations  
+1. Created the S3 bucket and DynamoDB table
+2. Configured the Terraform remote backend
+3. Migrated Terraform state to the remote backend
+4. Provisioned infrastructure using Terraform
+5. Tested state locking with concurrent operations
 
 ---
 
 ## Failure Scenario: State Locking
 
-- Simulated concurrent Terraform execution  
-- Second operation failed due to active state lock  
+A concurrent Terraform operation was simulated while another operation held the state lock.
 
-**Insight:**
+The second operation was prevented from modifying the infrastructure until the existing lock was released.
 
-- Demonstrates how DynamoDB prevents concurrent infrastructure modifications  
-- Ensures only one operation modifies infrastructure at a time  
-
----
-
-## Key Engineering Insight
-
-- Local state is not suitable for team environments due to risk of conflicts  
-- Remote state with locking ensures **consistency, reliability, and collaboration safety**  
-- State locking is critical to prevent **race conditions in infrastructure changes**  
+**Key insight:** State locking helps prevent conflicting infrastructure changes and protects Terraform state consistency.
 
 ---
 
 ## Security Considerations
 
-- S3 bucket configured with versioning and server-side encryption  
-- Public access blocked to protect sensitive state data  
-- IAM roles restrict access to Terraform backend resources  
-- DynamoDB ensures safe state locking and prevents concurrent writes  
+- S3 bucket configured with versioning and server-side encryption
+- Public access blocked on the S3 bucket
+- IAM permissions used to control access to backend resources
+- State locking used to prevent concurrent modifications
 
 ---
 
 ## CI/CD Consideration
 
-Remote state enables safe integration with CI/CD pipelines, ensuring consistent infrastructure deployment across environments.
+The remote backend provides a foundation for integrating Terraform with CI/CD pipelines, allowing infrastructure changes to use a shared and consistent state.
 
 ---
 
 ## Project Structure
 
-```
+```text
 04-terraform-remote-state/
-│
 ├── main.tf
 ├── provider.tf
 ├── backend.tf
@@ -123,42 +113,44 @@ Remote state enables safe integration with CI/CD pipelines, ensuring consistent 
 ```
 
 ---
-
 ## Screenshots
 
 ### S3 State File
-![S3 state file](./screenshots/02-s3-state-file.png)
 
-### EC2 Running
-![EC2 running](./screenshots/05-ec2-instance-running.png)
+![S3 State File](https://github.com/sujithaakathirvel/cloud-engineer-projects/blob/main/04-terraform-remote-state/screenshots/02-s3-state-file.png)
+
+### EC2 Instance Running
+
+![EC2 Instance Running](https://github.com/sujithaakathirvel/cloud-engineer-projects/blob/main/04-terraform-remote-state/screenshots/05-ec2-instance-running.png)
 
 ### State Lock Error
-![state lock error](./screenshots/06-state-lock-error.png)
+
+![State Lock Error](https://github.com/sujithaakathirvel/cloud-engineer-projects/blob/main/04-terraform-remote-state/screenshots/06-state-lock-error.png)
 
 ---
 
 ## Key Outcomes
 
-- Implemented a production-grade remote state management system  
-- Prevented state corruption through **state locking and concurrency control mechanisms**  
-- Enabled safe, collaborative infrastructure provisioning  
-- Improved reliability and consistency of Terraform deployments  
+Implemented remote Terraform state management using S3
+Configured state locking with DynamoDB
+Practised safe infrastructure provisioning with Terraform
+Demonstrated handling of concurrent Terraform operations
+Applied security controls to protect Terraform state
 
 ---
 
 ## Skills Demonstrated
 
-- Infrastructure as Code (Terraform)  
-- Remote state management and backend configuration  
-- State locking and concurrency control  
-- AWS resource provisioning (EC2, S3, DynamoDB)  
-- Secure infrastructure design  
+Infrastructure as Code with Terraform
+Remote state and backend configuration
+State locking and concurrency control
+AWS resource provisioning
+Secure infrastructure configuration
 
 ---
 
 ## Future Improvements
 
-- Integrate with CI/CD pipelines for automated deployments  
-- Use Terraform Cloud or backend workspaces  
-- Implement role-based access control for state management  
-
+Integrate Terraform with a CI/CD pipeline
+Explore Terraform Cloud or HCP Terraform
+Implement more granular IAM permissions for backend access
